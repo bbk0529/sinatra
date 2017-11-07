@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <h1> LOL FILE FOR USER KEYWORDS </h1>
+    <!--<p> LOG </p>-->
+    <!--<p><%= @log %></p>-->
+    
+    
+    <table style="width:100%">
+  <tr>
+    <td>Name</td>
+    <td>Time</td> 
+    <td>Stat</td>
+  </tr>
+  <tr>
+    <%@log.each do |sub| %>
+                <tr>
+            <% sub.each do |ssub| %>
+                <td><%=ssub%></td>
+            <% end %>
+                </tr>
+        <% end %>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

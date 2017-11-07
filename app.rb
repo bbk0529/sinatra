@@ -5,6 +5,8 @@ require 'httparty'
 require 'nokogiri'
 require 'magic_encoding'
 require 'uri'
+require 'date'
+require 'csv'
 
 get "/" do
     send_file 'index.html'
@@ -29,11 +31,30 @@ get "/search" do
     puts @component
     "#{@component}"
     
+    # File.open('log.txt','a+') do |f| #a+ 는 파일이 없어도 만들어진다. 
+    #     log="#{@id}, #{@component}" + Time.now.to_s.gsub("\t","").gsub("  "."").gsub("\n","")
+    #     f.write(log+"\n")
+    # end
+
+    CSV.open('log.csv','a+') do |csv| 
+        csv<<[@id, Time.now.to_s, @component.gsub("\n", " ").gsub("\t"," ").gsub(" ", "")]
+    end
    
-   erb :search
+   erb :search #return 문과 비슷한 역할을 한다. 중간에 있으면 아래쪽 코드가 실행이 안된다. 
 
 end
 
+
+
+get "/log" do
+    @log=[]
+    CSV.foreach('log.csv') do |row|
+            @log << row
+    end
+    erb :log
+end
+    
+    
 
 # get "/welcome" do
 #     "Welcome !"    
